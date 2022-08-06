@@ -19,67 +19,67 @@ class NestedViewHierarchyTestActivty : AppCompatActivity() {
 
     private val frameMetricsHandler = Handler()
 
-    private val frameMetricsAvailableListener = Window.OnFrameMetricsAvailableListener {
+    private val frameMetricsListener = Window.OnFrameMetricsAvailableListener {
             _, frameMetrics, _ ->
         val frameMetricsCopy = FrameMetrics(frameMetrics)
         // Layout measure duration in Nano seconds
         val layoutMeasureDurationNs = frameMetricsCopy.getMetric(FrameMetrics.LAYOUT_MEASURE_DURATION)
 
-        Log.d(TAG, "layoutMeasureDurationNs: " + layoutMeasureDurationNs)
+        Log.d(TAG, "layoutMeasurementDurationNs: " + layoutMeasureDurationNs)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_for_test)
+        setContentView(R.layout.activity_nested_view_hierarchy)
 
-        val traditionalCalcButton = findViewById<Button>(R.id.button_start_calc_traditional)
-        val constraintCalcButton = findViewById<Button>(R.id.button_start_calc_constraint)
+        val traditionalNestedCalcButton = findViewById<Button>(R.id.button_start_calc_traditional)
+        val constraintNonNestedCalcButton = findViewById<Button>(R.id.button_start_calc_constraint)
         val textViewFinish = findViewById<TextView>(R.id.textview_finish)
-        traditionalCalcButton.setOnClickListener {
+        traditionalNestedCalcButton.setOnClickListener {
             @SuppressLint("InflateParams")
-            constraintCalcButton.visibility = View.INVISIBLE
+            constraintNonNestedCalcButton.visibility = View.INVISIBLE
             val container = layoutInflater
-                .inflate(R.layout.activity_traditional, null) as ViewGroup
-            val asyncTask = MeasureLayoutAsyncTask(
+                .inflate(R.layout.activity_nested_traditional, null) as ViewGroup
+            val measurementAsyncTask = MeasurementLayoutAsyncTask(
                 getString(R.string.executing_nth_iteration),
-                WeakReference(traditionalCalcButton),
+                WeakReference(traditionalNestedCalcButton),
                 WeakReference(textViewFinish),
                 WeakReference(container))
-            asyncTask.execute()
+            measurementAsyncTask.execute()
         }
 
-        constraintCalcButton.setOnClickListener {
+        constraintNonNestedCalcButton.setOnClickListener {
             @SuppressLint("InflateParams")
-            traditionalCalcButton.visibility = View.INVISIBLE
+            traditionalNestedCalcButton.visibility = View.INVISIBLE
             val container = layoutInflater
-                .inflate(R.layout.activity_constraintlayout, null) as ViewGroup
-            val asyncTask = MeasureLayoutAsyncTask(
+                .inflate(R.layout.activity_nonnested_constraintlayout, null) as ViewGroup
+            val measurementAsyncTask = MeasurementLayoutAsyncTask(
                 getString(R.string.executing_nth_iteration),
-                WeakReference(constraintCalcButton),
+                WeakReference(constraintNonNestedCalcButton),
                 WeakReference(textViewFinish),
                 WeakReference(container))
-            asyncTask.execute()
+            measurementAsyncTask.execute()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        window.addOnFrameMetricsAvailableListener(frameMetricsAvailableListener, frameMetricsHandler)
+        window.addOnFrameMetricsAvailableListener(frameMetricsListener, frameMetricsHandler)
     }
 
     override fun onPause() {
         super.onPause()
-        window.removeOnFrameMetricsAvailableListener(frameMetricsAvailableListener)
+        window.removeOnFrameMetricsAvailableListener(frameMetricsListener)
     }
 
     /**
      * AsyncTask that triggers measure/layout in the background. Not to leak the Context of the
      * Views, take the View instances as WeakReferences.
      */
-    private class MeasureLayoutAsyncTask(val executingNthIteration: String,
-                                         val startButtonRef: WeakReference<Button>,
-                                         val finishTextViewRef: WeakReference<TextView>,
-                                         val containerRef: WeakReference<ViewGroup>) : AsyncTask<Void?, Int, Void?>() {
+    private class MeasurementLayoutAsyncTask(val executingNthIteration: String,
+                                             val startButtonRef: WeakReference<Button>,
+                                             val finishTextViewRef: WeakReference<TextView>,
+                                             val containerRef: WeakReference<ViewGroup>) : AsyncTask<Void?, Int, Void?>() {
 
         override fun doInBackground(vararg voids: Void?): Void? {
             for (i in 0 until TOTAL) {

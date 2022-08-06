@@ -2,7 +2,6 @@ package com.example.android.perf.test
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.support.test.runner.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
@@ -25,16 +24,16 @@ import java.util.concurrent.TimeUnit
 @RunWith(AndroidJUnit4ClassRunner::class)
 @SdkSuppress(minSdkVersion = 18)
 @MediumTest
-class PerformanceTest {
+class MeasurementPerformanceTest {
 
     private lateinit var device: UiDevice
 
     @Before
-    fun startMainActivityFromHomeScreen() {
+    fun startNestedViewHierarchyTestActivityFromHomeScreen() {
         device = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation())
         device.pressHome()
 
-        val launcherPackage = launcherPackageName
+        val launcherPackage = launchPackageName
         assertThat(launcherPackage, notNullValue())
         device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT)
 
@@ -51,21 +50,21 @@ class PerformanceTest {
 
     @Test
     @Throws(Throwable::class)
-    fun testRunCalculationTraditionalLayouts() {
-        runCalculation("button_start_calc_traditional")
+    fun testRunCalculationNestedTraditionalLayouts() {
+        doCalculation("button_start_calc_traditional")
     }
 
     @Test
     @Throws(Throwable::class)
-    fun testRunCalculationConstraintLayout() {
-        runCalculation("button_start_calc_constraint")
+    fun testRunCalculationNonNestedConstraintLayout() {
+        doCalculation("button_start_calc_constraint")
     }
 
     /**
      * Runs the calculation on a connected device or on an emulator. By clicking a button in the
      * app, the app runs measure/layout passes specific times.
      */
-    private fun runCalculation(buttonIdToStart: String) {
+    private fun doCalculation(buttonIdToStart: String) {
         device.findObject(By.res(BASIC_SAMPLE_PACKAGE, buttonIdToStart)).click()
         device.wait<UiObject2>(
             Until.findObject(By.res(BASIC_SAMPLE_PACKAGE,
@@ -77,7 +76,7 @@ class PerformanceTest {
      * is "com.android.launcher" but can be different at times. This is a generic solution which
      * works on all platforms.`
      */
-    private val launcherPackageName: String
+    private val launchPackageName: String
         get() {
             val intent = Intent(Intent.ACTION_MAIN)
             intent.addCategory(Intent.CATEGORY_HOME)
