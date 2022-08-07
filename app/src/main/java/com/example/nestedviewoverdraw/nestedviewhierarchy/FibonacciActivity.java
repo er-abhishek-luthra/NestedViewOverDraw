@@ -1,6 +1,7 @@
 package com.example.nestedviewoverdraw.nestedviewhierarchy;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ public class FibonacciActivity extends Activity {
             public void onClick(View v) {
                 // Compute the 40th number in the fibonacci sequence, then dump to log output. Note
                 // how the UI hangs each time you do this.
-                Log.i(LOG_TAG, String.valueOf(computeFibonacci(40)));
+                new FibonacciAsyncTask().execute(40);
             }
         });
 
@@ -42,20 +43,42 @@ public class FibonacciActivity extends Activity {
     /**
      *  Optimized Fibonacci Code
      */
-    int[] fibonacciList ;
-    public int computeFibonacci(int positionInFibSequence) {
-        if(fibonacciList == null){
-            fibonacciList = new int[positionInFibSequence+1];
+
+
+    private class FibonacciAsyncTask extends AsyncTask<Integer,Void,Integer>{
+        int[] fibonacciList ;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
-        if(positionInFibSequence==0){
-            return 0;
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            return  computeFibonacci(integers[0]);
         }
-        else if(positionInFibSequence ==1){
-            return 1;
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            Log.i(LOG_TAG, String.valueOf(integer));
+
         }
-        else if(fibonacciList[positionInFibSequence]==0){
-            fibonacciList[positionInFibSequence]= computeFibonacci(positionInFibSequence-1)+computeFibonacci(positionInFibSequence-2);
+
+        public int computeFibonacci(int positionInFibSequence) {
+            if(fibonacciList == null){
+                fibonacciList = new int[positionInFibSequence+1];
+            }
+            if(positionInFibSequence==0){
+                return 0;
+            }
+            else if(positionInFibSequence ==1){
+                return 1;
+            }
+            else if(fibonacciList[positionInFibSequence]==0){
+                fibonacciList[positionInFibSequence]= computeFibonacci(positionInFibSequence-1)+computeFibonacci(positionInFibSequence-2);
+            }
+            return fibonacciList[positionInFibSequence];
         }
-        return fibonacciList[positionInFibSequence];
     }
 }
