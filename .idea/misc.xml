@@ -5,9 +5,11 @@
       <map>
         <entry key="app/src/main/res/layout/activity_constraintlayout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_droid_cards.xml" value="0.11594202898550725" />
+        <entry key="app/src/main/res/layout/activity_fibonacci.xml" value="0.39166666666666666" />
         <entry key="app/src/main/res/layout/activity_for_test.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_nested_traditional.xml" value="0.14947916666666666" />
+        <entry key="app/src/main/res/layout/activity_nonnested_constraintlayout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_traditional.xml" value="0.1094224924012158" />
       </map>
     </option>

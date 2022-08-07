@@ -15,8 +15,6 @@
   limitations under the License.
   -->
 <resources>
-
-    <string name="app_name">Compute</string>
-    <string name="title_activity_caching_exercise">Caching Exercise</string>
-
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+    </style>
 </resources>
