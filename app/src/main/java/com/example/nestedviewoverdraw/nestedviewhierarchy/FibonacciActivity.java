@@ -40,18 +40,22 @@ public class FibonacciActivity extends Activity {
     }
 
     /**
-     *  Why store things when you can recurse instead?  Don't let evidence, personal experience,
-     *  or rational arguments from your peers fool you.  The elegant solution is the best solution.
-     *
-     * @param positionInFibSequence  The position in the fibonacci sequence to return.
-     * @return the nth number of the fibonacci sequence.  Seriously, try to keep up.
+     *  Optimized Fibonacci Code
      */
+    int[] fibonacciList ;
     public int computeFibonacci(int positionInFibSequence) {
-        if (positionInFibSequence <= 2) {
-            return 1;
-        } else {
-            return computeFibonacci(positionInFibSequence - 1)
-                    + computeFibonacci(positionInFibSequence - 2);
+        if(fibonacciList == null){
+            fibonacciList = new int[positionInFibSequence+1];
         }
+        if(positionInFibSequence==0){
+            return 0;
+        }
+        else if(positionInFibSequence ==1){
+            return 1;
+        }
+        else if(fibonacciList[positionInFibSequence]==0){
+            fibonacciList[positionInFibSequence]= computeFibonacci(positionInFibSequence-1)+computeFibonacci(positionInFibSequence-2);
+        }
+        return fibonacciList[positionInFibSequence];
     }
 }
