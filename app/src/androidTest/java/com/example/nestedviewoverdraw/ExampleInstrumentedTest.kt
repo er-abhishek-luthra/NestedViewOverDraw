@@ -24,28 +24,5 @@ import java.util.concurrent.CountDownLatch
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class ExampleInstrumentedTest {
-    @get:Rule
-    public val activityRule = ActivityScenarioRule(
-        MainActivity::class.java
-    )
-    @Test
-    fun scrollTest() {
-        val startSignal = CountDownLatch(1)
 
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.nestedviewoverdraw", appContext.packageName)
-        activityRule.getScenario().onActivity { activity ->
-            val recyclerView = activity.findViewById<RecyclerView>(R.id.recycler_view)
-            onView(withId(R.id.recycler_view)).perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-
-                    recyclerView.getAdapter()!!.getItemCount() - 1
-                )
-            );
-            startSignal.countDown()
-        }
-        startSignal.await()
-
-    }
 }

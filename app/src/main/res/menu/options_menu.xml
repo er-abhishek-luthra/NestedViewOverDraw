@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/notify_data_set_changes"
+        android:title="Notify Data Set Changed" />
+    <item android:id="@+id/notify_item_changed"
+        android:title="Notify Item Changed" />
+
+</menu>

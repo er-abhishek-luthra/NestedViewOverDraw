@@ -1,21 +1,47 @@
 package com.example.nestedviewoverdraw.nestedviewhierarchy.data;
 
-import android.content.Context;
-
-import com.example.nestedviewoverdraw.R;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class LocalDataSource {
 
+    ArrayList<String> orginalDataSet = null;
+    ArrayList<String> itemChangedDataSet = null;
 
-    public List<String> getMessages(Context context) {
-        List<String> listOfStrings = new ArrayList<>();
-        String localString = "Sample String ";
-        for (int index = 0; index < 1000; index++) {
-            listOfStrings.add(localString + " : " + index);
+    public LocalDataSource() {
+        if (orginalDataSet == null) {
+            orginalDataSet = getMessages();
         }
-        return listOfStrings;
+        if (itemChangedDataSet == null) {
+            itemChangedDataSet = getItemChangedDataSet("Item Changed ", 1);
+        }
+        orginalDataSet = getMessages();
     }
+
+    public ArrayList<String> getMessages() {
+        if(orginalDataSet == null){
+            ArrayList<String> dataSet = new ArrayList<>();
+            for (int index = 0; index < 1000; index++) {
+                dataSet.add("Orignal String");
+            }
+            orginalDataSet= dataSet;
+        }
+        return orginalDataSet;
+
+    }
+
+    public ArrayList<String> getItemChangedDataSet(String prefix, int index) {
+        if(itemChangedDataSet != null){
+            return itemChangedDataSet;
+        }
+        ArrayList<String> dataSet = new ArrayList<>(getMessages());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(prefix).append(" : ").append(index);
+        dataSet.set(index, stringBuilder.toString());
+        stringBuilder = null;
+        itemChangedDataSet = dataSet;
+        return itemChangedDataSet;
+    }
+
+
+
 }

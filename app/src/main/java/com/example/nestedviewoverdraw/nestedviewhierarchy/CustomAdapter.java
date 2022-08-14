@@ -16,6 +16,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     private List<String> localDataSet;
 
+
+
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
@@ -27,7 +29,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             super(view);
             // Define click listener for the ViewHolder's View
 
-            textView = (TextView) view.findViewById(R.id.item_title);
+            textView = view.findViewById(R.id.item_title);
         }
 
         public TextView getTextView() {
@@ -60,7 +62,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
         try {
-            Thread.sleep(50);
+            Thread.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -73,5 +75,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return localDataSet.size();
+    }
+
+    public void updateDataSet(List<String> updatedList){
+        this.localDataSet = updatedList;
     }
 }
