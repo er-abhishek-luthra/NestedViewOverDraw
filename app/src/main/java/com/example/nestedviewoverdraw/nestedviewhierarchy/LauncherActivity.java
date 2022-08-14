@@ -17,7 +17,7 @@ public class LauncherActivity extends Activity {
         setContentView(R.layout.launcher_main);
         ViewGroup rootView = (ViewGroup) findViewById(R.id.main_rootview);
 
-        addButton(FibonacciActivity.class, "Fibonacci Test", rootView);
+        addButton(MainActivity.class, "Recyclerview Test", rootView);
     }
 
     public void addButton(final Class destination, String description, ViewGroup parent) {
