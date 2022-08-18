@@ -1,4 +1,4 @@
-package com.example.nestedviewoverdraw.nestedviewhierarchy
+package com.example.perforamancetest.nestedviewhierarchy
 
 import android.annotation.SuppressLint
 import android.os.AsyncTask

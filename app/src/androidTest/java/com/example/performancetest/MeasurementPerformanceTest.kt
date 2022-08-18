@@ -1,4 +1,4 @@
-package com.example.android.perf.test
+package com.example.performancetest
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -67,7 +67,8 @@ class MeasurementPerformanceTest {
     private fun doCalculation(buttonIdToStart: String) {
         device.findObject(By.res(BASIC_SAMPLE_PACKAGE, buttonIdToStart)).click()
         device.wait<UiObject2>(
-            Until.findObject(By.res(BASIC_SAMPLE_PACKAGE,
+            Until.findObject(By.res(
+                BASIC_SAMPLE_PACKAGE,
                 "textview_finish")), TimeUnit.SECONDS.toMillis(15))
     }
 

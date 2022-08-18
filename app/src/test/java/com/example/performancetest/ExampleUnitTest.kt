@@ -1,4 +1,4 @@
-package com.example.nestedviewoverdraw
+package com.example.performancetest
 
 import org.junit.Test
 
